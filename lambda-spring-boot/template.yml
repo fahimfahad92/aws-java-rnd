@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: AWS Serverless Spring Boot 2 API - org.rnd::java-21-spring-boot-3-lambda
+Globals:
+  Api:
+    EndpointConfiguration: REGIONAL
+
+Resources:
+  Java21SpringBoot3LambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: org.rnd.StreamLambdaHandler::handleRequest
+      Runtime: java21
+      CodeUri: .
+      MemorySize: 512
+      Policies: AWSLambdaBasicExecutionRole
+      SnapStart:
+        ApplyOn: PublishedVersions
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Timeout: 30
+      Events:
+        ProxyResource:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: any
+
+Outputs:
+  Java21SpringBoot3LambdaApi:
+    Description: URL for application
+    Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/ping'
+    Export:
+      Name: Java21SpringBoot3LambdaApi
