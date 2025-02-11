@@ -15,25 +15,29 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.7</version>
+        <version>3.4.2</version>
     </parent>
 
     <properties>
         <java.version>21</java.version>
         <junit.version>5.10.2</junit.version>
         <spotless-maven-plugin.version>2.41.1</spotless-maven-plugin.version>
+        <aws-serverless-java-container-springboot3.version>2.1.2</aws-serverless-java-container-springboot3.version>
+        <aws-serverless-java-container-core.version>2.1.2</aws-serverless-java-container-core.version>
+        <httpclient5.version>5.4.1</httpclient5.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.amazonaws.serverless</groupId>
             <artifactId>aws-serverless-java-container-springboot3</artifactId>
-            <version>2.0.3</version>
+            <version>${aws-serverless-java-container-springboot3.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.amazonaws.serverless</groupId>
             <artifactId>aws-serverless-java-container-core</artifactId>
-            <version>2.0.3</version>
+            <version>${aws-serverless-java-container-core.version}</version>
             <classifier>tests</classifier>
             <type>test-jar</type>
             <scope>test</scope>
@@ -41,8 +45,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents.client5</groupId>
             <artifactId>httpclient5</artifactId>
-            <version>5.2.1</version>
-            <scope>test</scope>
+            <version>${httpclient5.version}</version>
         </dependency>
 
         <dependency>
@@ -61,6 +64,8 @@
             <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
+
+
     </dependencies>
 
     <dependencyManagement>
