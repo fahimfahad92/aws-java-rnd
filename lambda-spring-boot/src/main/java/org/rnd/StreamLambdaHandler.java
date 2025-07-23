@@ -9,15 +9,16 @@ import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import org.crac.Resource;
 
-public class StreamLambdaHandler implements RequestStreamHandler {
+public class StreamLambdaHandler implements RequestStreamHandler, Resource {
   private static final SpringBootLambdaContainerHandler<AwsProxyRequest, AwsProxyResponse> handler;
 
   static {
     try {
       handler = SpringBootLambdaContainerHandler.getAwsProxyHandler(Application.class);
     } catch (ContainerInitializationException e) {
-      // if we fail here. We re-throw the exception to force another cold start
+      // If we fail here. We re-throw the exception to force another cold start
       e.printStackTrace();
       throw new RuntimeException("Could not initialize Spring Boot application", e);
     }
@@ -27,5 +28,15 @@ public class StreamLambdaHandler implements RequestStreamHandler {
   public void handleRequest(InputStream inputStream, OutputStream outputStream, Context context)
       throws IOException {
     handler.proxyStream(inputStream, outputStream, context);
+  }
+
+  @Override
+  public void beforeCheckpoint(org.crac.Context<? extends Resource> context)  {
+    System.out.println("Before checkpoint");
+  }
+
+  @Override
+  public void afterRestore(org.crac.Context<? extends Resource> context) {
+    System.out.println("After restore");
   }
 }
