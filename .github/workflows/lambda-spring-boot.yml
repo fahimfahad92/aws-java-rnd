@@ -1,0 +1,16 @@
+name: lambda-spring-boot
+
+on:
+  push:
+    branches: [main]
+    paths: ["lambda-spring-boot/**", ".github/workflows/lambda-spring-boot.yml", ".github/workflows/maven-build.yml"]
+  pull_request:
+    paths: ["lambda-spring-boot/**", ".github/workflows/lambda-spring-boot.yml", ".github/workflows/maven-build.yml"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: ./.github/workflows/maven-build.yml
+    with:
+      project: lambda-spring-boot
+      build-command: mvn -B verify

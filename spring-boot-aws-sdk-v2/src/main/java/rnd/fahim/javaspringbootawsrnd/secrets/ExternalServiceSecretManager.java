@@ -31,9 +31,9 @@ public class ExternalServiceSecretManager {
     private final SecretsManagerClient secretsClient;
     private final SsmClient ssmClient;
 
-    private final Region region = Region.of("ap-southeast-1");
-
-    public ExternalServiceSecretManager(ObjectMapper objectMapper) {
+    public ExternalServiceSecretManager(
+            ObjectMapper objectMapper, @Value("${aws.region}") String awsRegion) {
+        Region region = Region.of(awsRegion);
         this.objectMapper = objectMapper;
         this.secretsClient = SecretsManagerClient.builder().region(region).build();
         this.ssmClient = SsmClient.builder().region(region).build();

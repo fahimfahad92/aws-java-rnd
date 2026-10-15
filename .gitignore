@@ -1,0 +1,9 @@
+# Per-project ignores live in each folder's own .gitignore
+.DS_Store
+.idea/
+*.iml
+target/
+build/
+.terraform/
+*.tfstate
+*.tfstate.*

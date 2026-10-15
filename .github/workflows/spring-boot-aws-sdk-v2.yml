@@ -1,0 +1,15 @@
+name: spring-boot-aws-sdk-v2
+
+on:
+  push:
+    branches: [main]
+    paths: ["spring-boot-aws-sdk-v2/**", ".github/workflows/spring-boot-aws-sdk-v2.yml", ".github/workflows/maven-build.yml"]
+  pull_request:
+    paths: ["spring-boot-aws-sdk-v2/**", ".github/workflows/spring-boot-aws-sdk-v2.yml", ".github/workflows/maven-build.yml"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: ./.github/workflows/maven-build.yml
+    with:
+      project: spring-boot-aws-sdk-v2
