@@ -77,15 +77,14 @@ public class ExternalServiceSecretManager {
                             .withDecryption(true)
                             .build();
 
+            // The paginator fetches every page (GetParametersByPath returns at most 10 per call)
             ssmClient.getParametersByPathPaginator(request).stream()
-                    .iterator()
-                    .next()
-                    .parameters()
+                    .flatMap(page -> page.parameters().stream())
                     .forEach(p -> params.put(p.name(), p.value()));
 
             return params;
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to load parameter " + e.getMessage());
+        } catch (SsmException e) {
+            throw new RuntimeException("Failed to load parameters under " + pathPrefix, e);
         }
     }
 }

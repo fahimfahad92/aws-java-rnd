@@ -89,6 +89,7 @@ Returns true if S3 reports a successful deletion.
 - Receiving messages: Spring Cloud AWS SQS listeners in SqsService:
   - @SqsListener("#{ '${standardQueueName}' }") → logs messages from the Standard queue
   - @SqsListener("#{ '${fifoQueueName}' }") → logs messages from the FIFO queue
+- Manual polling (alternative to the listener): SqsService.pollMessages() long-polls the Standard queue every 5 s with ReceiveMessage and deletes each message. Off by default; set aws.sqs.manual-polling.enabled=true to turn it on (SqsPollingConfig enables scheduling). Both read the same queue, so with polling on they share its messages.
 
 To test receiving, publish messages to the configured queues using the AWS Console or AWS CLI. The application log will show received messages.
 
